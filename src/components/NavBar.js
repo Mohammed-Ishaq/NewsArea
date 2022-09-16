@@ -24,7 +24,7 @@ const NavBar = () => {
                             <li className="nav-item"><Link className="nav-link" to="/sports">Sports</Link></li>
                             <li className="nav-item"><Link className="nav-link" to="/technology">Technology</Link></li>
                         </ul>
-                        <span style={{color:'white'}}>Made with <FontAwesomeIcon icon="fa-solid fa-heart" beat/> by<b> Mohammed Ishaq</b></span>
+                        <span style={{color:'white'}}>Created by<b> Mohammed Ishaq</b></span>
                     </div>
                 </div>
             </nav>
