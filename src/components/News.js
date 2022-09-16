@@ -17,7 +17,7 @@ const News = (props)=>{
 
     const updateNews = async ()=> {
         props.setProgress(10);
-        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`; 
+        const url = `https://gnews.io/api/v4/top-headlines?country=${props.country}&lang=en&topic=${props.topic}&token=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`; 
         setLoading(true)
         let data = await fetch(url);
         props.setProgress(30);
@@ -30,14 +30,14 @@ const News = (props)=>{
     }
 
     useEffect(() => {
-        document.title = `${capitalizeFirstLetter(props.category)} - NewsArea`;
+        document.title = `${capitalizeFirstLetter(props.topic)} - NewsArea`;
         updateNews(); 
         // eslint-disable-next-line
     }, [])
 
 
     const fetchMoreData = async () => {   
-        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;
+        const url = `https://gnews.io/api/v4/top-headlines?country=${props.country}&lang=en&topic=${props.topic}&token=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;
         setPage(page+1) 
         let data = await fetch(url);
         let parsedData = await data.json()
@@ -47,7 +47,7 @@ const News = (props)=>{
  
         return (
             <>
-                <h1 className="text-center" style={{ margin: '35px 0px', marginTop: '90px' }}>NewsArea - Top {capitalizeFirstLetter(props.category)} Headlines</h1>
+                <h1 className="text-center" style={{ margin: '35px 0px', marginTop: '90px' }}>NewsArea - Top {capitalizeFirstLetter(props.topic)} Headlines</h1>
                 {loading && <Spinner />}
                 <InfiniteScroll
                     dataLength={articles.length}
@@ -60,7 +60,7 @@ const News = (props)=>{
                     <div className="row">
                         {articles.map((element) => {
                             return <div className="col-md-4" key={element.url}>
-                                <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
+                                <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} imageUrl={element.image} newsUrl={element.url} author={element.source.name} date={element.publishedAt} source={element.source.name} />
                             </div>
                         })}
                     </div>
@@ -75,13 +75,13 @@ const News = (props)=>{
 News.defaultProps = {
     country: 'in',
     pageSize: 8,
-    category: 'general',
+    topic: 'breaking-news',
 }
 
 News.propTypes = {
     country: PropTypes.string,
     pageSize: PropTypes.number,
-    category: PropTypes.string,
+    topic: PropTypes.string,
 }
 
 export default News
